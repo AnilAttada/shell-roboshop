@@ -71,5 +71,5 @@ VALIDATE $? "Copying repo"
 dnf install mongodb-mongosh -y
 VALIDATE $? "Installing mongodb client"
 
-mongosh --host mongodb.anilkumar.shop </app/db/master-data.js
+mongosh --host mongodb.anilkumar.shop < /app/db/master-data.js
 VALIDATE $? "Loading data to mongodb"
