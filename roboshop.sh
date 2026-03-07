@@ -21,13 +21,13 @@ do
         
     echo "$instance Ip is: $IP"
 
-    aws route53 change-resource-record-sets --hosted-zone-id Z1033319ZTEWWV8J5PPG \
+    aws route53 change-resource-record-sets --hosted-zone-id $ZONE_ID \
     --change-batch '{ 
         "Comment": "Creating or updating a record ser for cogninto endpoint",
         "Changes": [ { 
             "Action": "UPSERT",
             "ResourceRecordSet": { 
-                "Name": "$RECORD_NAME",
+                "Name": "'$RECORD_NAME'",
                 "Type": "A",
                 "TTL": 1, 
                 "ResourceRecords": [ { "Value": "'$IP'" } ]
