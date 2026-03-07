@@ -24,15 +24,14 @@ do
     aws route53 change-resource-record-sets --hosted-zone-id Z1033319ZTEWWV8J5PP \
     --change-batch 
     '{ 
-        "Comment": "Creating or updating a record ser for cogninto endpoint"
+        "Comment": "Creating or updating a record ser for cogninto endpoint",
         "Changes": [ { 
             "Action": "UPSERT",
             "ResourceRecordSet": { 
                 "Name": "$RECORD_NAME",
                 "Type": "A",
                 "TTL": 1, 
-                "ResourceRecords": [ { 
-                    "Value": "'$IP'" } ]
+                "ResourceRecords": [ { "Value": "'$IP'" } ]
             } 
         } ] 
     }'
