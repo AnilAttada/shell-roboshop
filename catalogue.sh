@@ -85,6 +85,7 @@ then
     VALIDATE $? "Loading data to mongodb"
 else
     echo -e "Data is exist .... $Y SKIPPING $N"
+fi
 
 
     
