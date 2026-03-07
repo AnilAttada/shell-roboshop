@@ -13,11 +13,27 @@ do
     if [ $instance != "frontend" ]
     then
         IP=$(aws ec2 describe-instances --instance-ids $INSTANCE_ID --query "Reservations[0].Instances[0].PrivateIpAddress" --output text)
-        
+        RECORD_NAME="$instance.$DOMAIN_NAME"
     else
         IP=$(aws ec2 describe-instances --instance-ids $INSTANCE_ID --query "Reservations[0].Instances[0].PublicIpAddress" --output text)
-        
+        RECORD_NAME="$DOMAIN_NAME"
     fi
         
         echo "$instance Ip is: $IP"
+
+        aws route53 change-resource-record-sets --hosted-zone-id Z1033319ZTEWWV8J5PP \
+        --change-batch 
+        '{ 
+            "Comment": "Creating or updating a record ser for cogninto endpoint"
+            "Changes": [ { 
+            "Action": "UPSERT",
+            "ResourceRecordSet": { 
+                "Name": "$$RECORD_NAME",
+                "Type": "A",
+                "TTL": 1, 
+                "ResourceRecords": [ { 
+                    "Value": "'$IP'" } ]
+            } 
+            } ] 
+        }'
 done
