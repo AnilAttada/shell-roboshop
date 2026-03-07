@@ -78,5 +78,13 @@ VALIDATE $? "Copying repo"
 dnf install mongodb-mongosh -y &>>$LOG_FILE
 VALIDATE $? "Installing mongodb client"
 
-mongosh --host mongodb.anilkumar.shop < /app/db/master-data.js &>>$LOG_FILE
-VALIDATE $? "Loading data to mongodb"
+STATUS=$(mongosh --host mongodb.anilkumar.shop --eval 'db.getMongo().getDBNames().indexOf("catalogue")')
+if [ $STATUS -lt 0 ]
+then
+    mongosh --host mongodb.anilkumar.shop < /app/db/master-data.js &>>$LOG_FILE
+    VALIDATE $? "Loading data to mongodb"
+else
+    echo -e "Data is exist .... $Y SKIPPING $N"
+
+
+    
