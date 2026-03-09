@@ -54,4 +54,4 @@ VALIDATE $? "Starting redis"
 END_TIME=$(date +%s)
 TIME_TAKEN=$(( $END_TIME - $START_TIME ))
 
-echo -e "Script execution completed successfully, $Y time takes: $TIME_TAKEN $N" | tee -a $LOG_FILE
+echo -e "Script execution completed successfully, $Y time takes: $TIME_TAKEN seconds $N" | tee -a $LOG_FILE
