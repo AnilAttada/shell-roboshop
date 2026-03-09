@@ -45,13 +45,13 @@ VALIDATE $? "Installing redis"
 sed -i -e 's/127.0.0.1/0.0.0.0/g' -e '/protected-mode/ c protected-mode no' /etx/redis/redis.conf
 VALIDATE $? "Edited redis.conf flles"
 
-systemctl enable redis 
+systemctl enable redis &>>$LOG_FILE
 VALIDATE $? "Enabiling redis"
 
-systemctl start redis 
+systemctl start redis &>>$LOG_FILE
 VALIDATE $? "Starting redis"
 
 END_TIME=$(date +%s)
 TIME_TAKEN=$(( $END_TIME - $START_TIME ))
 
-echo -e "Script execution completed successfully, $Y time takes: $TIME_TAKEN $N" 
+echo -e "Script execution completed successfully, $Y time takes: $TIME_TAKEN $N" | tee -a $LOG_FILE
