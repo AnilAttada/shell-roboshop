@@ -2,7 +2,7 @@
 
 AMI_ID="ami-0220d79f3f480ecf5"
 SG_ID="sg-06f23152b42979b41"  
-INSTANCES=("mongodb" "frontend" "catalogue")
+INSTANCES=("mongodb" "frontend" "catalogue" "redis" "cart" "user" "shipping" "payment" "mysql" "dispatch" "rabbitmq")
 ZONE_ID="Z1033319ZTEWWV8J5PPG"
 DOMAIN_NAME="anilkumar.shop"
 
