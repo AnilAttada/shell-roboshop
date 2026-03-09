@@ -33,13 +33,25 @@ VALIDATE(){
 
 }
 
-dnf module disable redis -y
+dnf module disable redis -y &>>$LOG_FILE
 VALIDATE $? "Disabiling redis"
 
-dnf module enable redis:7 -y
+dnf module enable redis:7 -y &>>$LOG_FILE
 VALIDATE $? "Enabiling redis"
 
-dnf install redis -y 
+dnf install redis -y &>>$LOG_FILE
 VALIDATE $? "Installing redis"
 
-# sed -i -e 's/127.0.0.1/0.0.0.0/g' -e '/protected-mode/ c protected-mode no' /etx/redis/redis.conf
+sed -i -e 's/127.0.0.1/0.0.0.0/g' -e '/protected-mode/ c protected-mode no' /etx/redis/redis.conf
+VALIDATE $? "Edited redis.conf flles"
+
+systemctl enable redis 
+VALIDATE $? "Enabiling redis"
+
+systemctl start redis 
+VALIDATE $? "Starting redis"
+
+END_TIME=$(date +%s)
+TIME_TAKEN=$(( $END_TIME - $START_TIME ))
+
+echo -e "Script execution completed successfully, $Y time takes: $TIME_TAKEN $N" 
