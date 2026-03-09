@@ -66,7 +66,7 @@ npm install &>>$LOG_FILE
 VALIDATE $? "Installing dependencies"
 
 cp $SCRIPT_DIR/cart.service /etc/systemd/system/cart.service
-VALIDATE $? "Copying cart"
+VALIDATE $? "Copying user"
 
 systemctl daemon-reload &>>$LOG_FILE
 systemctl enable cart &>>$LOG_FILE
