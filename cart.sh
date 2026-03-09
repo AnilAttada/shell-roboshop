@@ -66,15 +66,16 @@ npm install &>>$LOG_FILE
 VALIDATE $? "Installing dependencies"
 
 cp $SCRIPT_DIR/cart.service /etc/systemd/system/cart.service
-VALIDATE $? "Copying user"
+VALIDATE $? "Copying cart"
 
 systemctl daemon-reload &>>$LOG_FILE
 systemctl enable cart &>>$LOG_FILE
 systemctl start cart 
 VALIDATE $? "Restarting cart"
 
-
 END_TIME=$(date +%s)
 TIME_TAKEN=$(( $END_TIME - $START_TIME ))
 
 echo -e "Script execution completed successfully, $Y time takes: $TIME_TAKEN seconds $N" | tee -a $LOG_FILE
+
+    
