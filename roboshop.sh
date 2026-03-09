@@ -7,7 +7,7 @@ ZONE_ID="Z1033319ZTEWWV8J5PPG"
 DOMAIN_NAME="anilkumar.shop"
 
 
-for instance in ${INSTANCES[@]}
+for instance in $@
 do
     INSTANCE_ID=$(aws ec2 run-instances --image-id ami-0220d79f3f480ecf5 --instance-type t3.micro  --security-group-ids sg-06f23152b42979b41  --tag-specifications "ResourceType=instance,Tags=[{Key=Name, Value=$instance}]" --query "Instances[0].InstanceId" --output text)
     if [ $instance != "frontend" ]
