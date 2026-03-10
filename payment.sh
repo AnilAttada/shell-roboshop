@@ -23,8 +23,6 @@ else
     echo -e "$G running with root access $N" | tee -a $LOG_FILE
 fi
 
-echo "Please enter rabbitmq password to setup"
-read -s RABBITMQ_PASSWORD
 
 VALIDATE(){
     if [ $1 -eq 0 ]
