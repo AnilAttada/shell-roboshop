@@ -36,7 +36,7 @@ VALIDATE(){
 
 }
 
-dnf install maven -y
+dnf install maven -y &>>$LOG_FILE
 VALIDATE $? "Installing Maven and Java"
 
 id roboshop
@@ -73,15 +73,15 @@ systemctl enable shipping &>>$LOG_FILE
 systemctl start shipping 
 VALIDATE $? "Restarting shiping"
 
-dnf install mysql -y 
+dnf install mysql -y &>>$LOG_FILE
 VALIDATE $? "Installing mysql client"
 
 mysql -h mysql.anilkumar.shop -u root -p$MYSQL_ROOT_PASSWORD -e 'use cities'
 if  [ $? -ne 0 ]
 then
-    mysql -h mysql.anilkumar.shop -uroot -p$MYSQL_ROOT_PASSWORD < /app/db/schema.sql
-    mysql -h mysql.anilkumar.shop -uroot -p$MYSQL_ROOT_PASSWORD < /app/db/app-user.sql 
-    mysql -h mysql.anilkumar.shop -uroot -p$MYSQL_ROOT_PASSWORD < /app/db/master-data.sql
+    mysql -h mysql.anilkumar.shop -uroot -p$MYSQL_ROOT_PASSWORD < /app/db/schema.sql &>>$LOG_FILE
+    mysql -h mysql.anilkumar.shop -uroot -p$MYSQL_ROOT_PASSWORD < /app/db/app-user.sql &>>$LOG_FILE
+    mysql -h mysql.anilkumar.shop -uroot -p$MYSQL_ROOT_PASSWORD < /app/db/master-data.sql &>>$LOG_FILE
     VALIDATE $? "Loading data into mysql"
 else
     echo -e "Data is already loaded into mysql.... $Y SKIPPING $N"
