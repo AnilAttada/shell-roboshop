@@ -1,6 +1,6 @@
 #!/bin/bash
 
-START_TIME=$(date +%s)
+STRAT_TIME=$(date +%s)
 USERID=$(id -u)
 
 R="\e[31m"
@@ -10,7 +10,6 @@ N="\e[0m"
 LOGS_FOLDER="/var/log/roboshop-logs"
 SCRIPT_NAME=$(echo $0 | cut -d "." -f1)
 LOG_FILE="$LOGS_FOLDER/$SCRIPT_NAME.log"
-SCRIPT_DIR=$PWD
 
 mkdir -p $LOGS_FOLDER
 echo "Script started executing at: $(date)"  | tee -a $LOG_FILE
@@ -33,25 +32,11 @@ VALIDATE(){
 
 }
 
-dnf module disable redis -y &>>$LOG_FILE
+dnf module disable redis -y
 VALIDATE $? "Disabiling redis"
 
-dnf module enable redis:7 -y &>>$LOG_FILE
+dnf module enable redis:7 -y
 VALIDATE $? "Enabiling redis"
 
-dnf install redis -y &>>$LOG_FILE
+dnf install redis -y 
 VALIDATE $? "Installing redis"
-
-sed -i -e 's/127.0.0.1/0.0.0.0/g' -e '/protected-mode/ c protected-mode no' /etc/redis/redis.conf
-VALIDATE $? "Edited redis.conf flles"
-
-systemctl enable redis &>>$LOG_FILE
-VALIDATE $? "Enabiling redis"
-
-systemctl start redis &>>$LOG_FILE
-VALIDATE $? "Starting redis"
-
-END_TIME=$(date +%s)
-TIME_TAKEN=$(( $END_TIME - $START_TIME ))
-
-echo -e "Script execution completed successfully, $Y time takes: $TIME_TAKEN seconds $N" | tee -a $LOG_FILE
