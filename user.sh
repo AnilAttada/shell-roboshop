@@ -69,7 +69,6 @@ cp $SCRIPT_DIR/user.service /etc/systemd/system/user.service
 VALIDATE $? "Copying user"
 
 systemctl daemon-reload &>>$LOG_FILE
-systemctl unmask user &>>$LOG_FILE
 systemctl enable user &>>$LOG_FILE
 systemctl start user 
 VALIDATE $? "Restarting user"
